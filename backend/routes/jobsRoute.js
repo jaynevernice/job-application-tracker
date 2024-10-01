@@ -16,12 +16,12 @@ router.post('/', async (request, response) => {
         if (!request.body.jobLink) {
             errors.push({ field: "jobLink", message: "Job link is required" });
         } else {
-            const urlPattern = new RegExp('^(https?:\\/\\/)?' + 
-                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + 
-                '((\\d{1,3}\\.){3}\\d{1,3}))' + 
-                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + 
-                '(\\?[;&a-z\\d%_.~+=-]*)?' + 
-                '(\\#[-a-z\\d_]*)?$', 'i'); 
+            const urlPattern = new RegExp('^(https?:\\/\\/)?' +
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' +
+                '((\\d{1,3}\\.){3}\\d{1,3}))' +
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+                '(\\?[;&a-z\\d%_.~+=-]*)?' +
+                '(\\#[-a-z\\d_]*)?$', 'i');
             if (!urlPattern.test(request.body.jobLink)) {
                 errors.push({ field: "jobLink", message: "Job link must be a valid URL" });
             }
@@ -55,7 +55,7 @@ router.post('/', async (request, response) => {
             jobDescription: request.body.jobDescription,
             nextFollowUpDate: request.body.nextFollowUpDate,
             jobIdFromPlatform: request.body.jobIdFromPlatform,
-            userId: request.user._id, 
+            userId: request.user._id,
         }
 
         const job = await Job.create(newJob);
@@ -75,10 +75,10 @@ router.post('/', async (request, response) => {
 // Read all jobs
 router.get('/', async (request, response) => {
     try {
-        
+
         const userId = request.user._id;
 
-        const jobs = await Job.find({userId}).sort({created: -1});
+        const jobs = await Job.find({ userId }).sort({ created: -1 });
 
         return response.status(200).json({
             count: jobs.length,
@@ -92,6 +92,108 @@ router.get('/', async (request, response) => {
 
     }
 });
+
+// enum: ['Applied', 'Interviewing', 'Offered', 'Rejected', 'Hired'],
+// Get data from MongoDB
+// router.get('/analyze', async (request, response) => {
+//     try {
+//         const userId = request.user._id;
+
+//         console.log(userId);
+
+//         const jobs = await Job.find({userId});
+
+//         console.log(jobs);
+
+//         const jobStatuses = jobs.map(job => ({
+//             status: job.status
+//         }));
+
+//         console.log(jobStatuses);
+
+//         return response.status(200).json({
+//             data: jobStatuses
+//         });
+
+//     } catch (error) {
+
+//         console.log(error.message);
+//         console.log('Request:', request.body);
+//         response.status(500).json({ message: error.message });
+
+//     }
+// });
+
+// router.get('/analyze', async (request, response) => {
+//     try {
+//         const userId = request.user._id;
+
+//         console.log(userId);
+
+//         const jobs = await Job.find({ userId });
+
+//         console.log(jobs);
+
+//         // Count occurrences of each job status
+//         const jobStatusCounts = jobs.reduce((acc, job) => {
+//             acc[job.status] = (acc[job.status] || 0) + 1;
+//             return acc;
+//         }, {});
+
+//         console.log(jobStatusCounts);
+
+//         // Prepare data for the Sankey chart
+//         const nodes = [
+//             { id: 'Applied', title: 'Applied' },
+//             { id: 'Interviewing', title: 'Interviewing' },
+//             { id: 'Offered', title: 'Offered' },
+//             { id: 'Rejected', title: 'Rejected' },
+//             { id: 'Hired', title: 'Hired' }
+//         ];
+
+//         const edges = Object.entries(jobStatusCounts).map(([status, count]) => ({
+//             source: status,
+//             target: 'Job Statuses',
+//             value: count,
+//         }));
+
+//         return response.status(200).json({
+//             nodes,
+//             edges
+//         });
+
+//     } catch (error) {
+//         console.log(error.message);
+//         console.log('Request:', request.body);
+//         response.status(500).json({ message: error.message });
+//     }
+// });
+
+router.get('/analyze', async (request, response) => {
+    try {
+        const userId = request.user._id;
+        const jobs = await Job.find({ userId });
+
+        const jobStatuses = jobs.map(job => job.status);
+
+        // Count the number of each status
+        const statusCounts = jobStatuses.reduce((acc, status) => {
+            acc[status] = (acc[status] || 0) + 1;
+            return acc;
+        }, {});
+
+        return response.status(200).json({
+            data: statusCounts
+        });
+
+    } catch (error) {
+        console.log(error.message);
+        console.log('Request:', request.body);
+        response.status(500).json({ message: error.message });
+    }
+});
+
+
 
 // Read one book
 router.get('/:id', async (request, response) => {

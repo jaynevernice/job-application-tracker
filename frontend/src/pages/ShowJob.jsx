@@ -55,6 +55,13 @@ const ShowJob = () => {
           <h1 className='text-4xl font-mono font-bold text-primary'>Application Details</h1>
 
           <div className="flex items-center">
+            {user &&
+              <button disabled="disabled" className='mx-1 bg-background rounded-full p-3 flex items-center justify-center shadow-neumorphic hover:shadow-neumorphic-inset transition-transform duration-300 group'>
+                <span className="group-hover:inline-block text-primary font-bold transition-opacity duration-300">
+                  {user.fname.toUpperCase()} {user.lname.toUpperCase()}
+                </span>
+              </button>
+            }
             <BackButton />
             <LogoutButton />
           </div>

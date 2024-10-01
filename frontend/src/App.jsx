@@ -8,6 +8,7 @@ import ShowBook from './pages/ShowJob.jsx'
 import EditBook from './pages/EditJob.jsx'
 import DeleteJob from './pages/DeleteJob.jsx'
 import Index from './pages/Index.jsx'
+import AnalyzeJobs from './pages/AnalyzeJobs.jsx';
 
 import { AuthContextProvider } from './context/AuthContext'
 
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/signup" element={<Index isLogin={false} />} />
         <Route path='/home' element={<Home />} />
         <Route path='/jobs/create' element={<CreateJobs />} />
+        <Route path='/jobs/analyze' element={<AnalyzeJobs />} />
         <Route path='/jobs/details/:id' element={<ShowBook />} />
         <Route path='/jobs/edit/:id' element={<EditBook />} />
         <Route path='/jobs/delete/:id' element={<DeleteJob />} />

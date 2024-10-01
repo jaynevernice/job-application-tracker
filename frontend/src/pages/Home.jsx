@@ -3,7 +3,7 @@ import axios from 'axios';
 import Spinner from '../components/Spinner';
 import LogoutButton from '../components/LogoutButton';
 import { Link, useNavigate } from 'react-router-dom';
-import { RiAddCircleLine, RiInformation2Line, RiEditLine, RiDeleteBin5Line } from "react-icons/ri";
+import { RiAddCircleLine, RiInformation2Line, RiEditLine, RiDeleteBin5Line, RiLineChartLine } from "react-icons/ri";
 
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     if (!user) {
       navigate('/');
-      return; 
+      return;
     }
 
     console.log("Current user in Home:", user);
@@ -27,7 +27,7 @@ const Home = () => {
     axios
       .get('http://localhost:5555/jobs', {
         headers: {
-          Authorization: `Bearer ${user.token}`, 
+          Authorization: `Bearer ${user.token}`,
         },
       })
       .then((response) => {
@@ -38,7 +38,7 @@ const Home = () => {
         console.log('Error:' + error);
         setLoading(false);
       });
-  }, [user]); 
+  }, [user]);
 
 
   return (
@@ -47,17 +47,28 @@ const Home = () => {
 
         <div className='flex items-center justify-between w-full h-20'>
           <h1 className='text-4xl font-mono font-bold text-primary'>Jobs</h1>
-          {user &&
-            <p className="text-md font-mono text-secondary bg-background px-6 py-3 rounded-lg shadow-neumorphic-inset transition-transform duration-200">
-              Welcome, {user.fname} {user.lname}!
-            </p>
-          }
 
           <div className='flex items-center justify-center'>
+
+            {user &&
+              <button disabled="disabled" className='mx-1 bg-background rounded-full p-3 flex items-center justify-center shadow-neumorphic hover:shadow-neumorphic-inset transition-transform duration-300 group'>
+                <span className="group-hover:inline-block text-primary font-bold transition-opacity duration-300">
+                  {user.fname.toUpperCase()} {user.lname.toUpperCase()}
+                </span>
+              </button>
+            }
+
             <Link to={'/jobs/create'} className='mx-1 bg-background rounded-full p-3 flex items-center justify-center shadow-neumorphic hover:shadow-neumorphic-inset transition-transform duration-300 group'>
               <RiAddCircleLine className='mr-1 text-primary' size={24} />
               <span className="hidden group-hover:inline-block text-primary font-bold transition-opacity duration-300">
                 ADD JOB TO TRACK
+              </span>
+            </Link>
+
+            <Link to={'/jobs/analyze'} className='mx-1 bg-background rounded-full p-3 flex items-center justify-center shadow-neumorphic hover:shadow-neumorphic-inset transition-transform duration-300 group'>
+              <RiLineChartLine className='mr-1 text-primary' size={24} />
+              <span className="hidden group-hover:inline-block text-primary font-bold transition-opacity duration-300">
+                ANALYZE
               </span>
             </Link>
 

@@ -11,7 +11,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 const EditJob = () => {
 
-  const {user} = useAuthContext();  
+  const { user } = useAuthContext();
 
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('');
@@ -33,7 +33,7 @@ const EditJob = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate('/');  
+      navigate('/');
       return;
     }
 
@@ -119,6 +119,13 @@ const EditJob = () => {
           <h1 className='text-4xl font-mono font-bold text-secondary'>Edit Application</h1>
 
           <div className="flex items-center">
+            {user &&
+              <button disabled="disabled" className='mx-1 bg-background rounded-full p-3 flex items-center justify-center shadow-neumorphic hover:shadow-neumorphic-inset transition-transform duration-300 group'>
+                <span className="group-hover:inline-block text-primary font-bold transition-opacity duration-300">
+                  {user.fname.toUpperCase()} {user.lname.toUpperCase()}
+                </span>
+              </button>
+            }
             <BackButton />
             <LogoutButton />
           </div>
