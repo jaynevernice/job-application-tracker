@@ -25,7 +25,6 @@ const AnalyzeJobs = () => {
 
                 const statusCounts = response.data.data;
 
-                // Create nodes conditionally based on statusCounts
                 const nodes = [
                     { id: 'Applied', title: 'Applied' },
                     { id: 'Interviewing', title: 'Interviewing' },
@@ -33,16 +32,15 @@ const AnalyzeJobs = () => {
                     { id: 'Rejected', title: 'Rejected' },
                     { id: 'Hired', title: 'Hired' },
                     { id: 'Total Jobs', title: 'Total Jobs' },
-                ].filter(node => statusCounts[node.id] > 0 || node.id === 'Total Jobs'); // Keep Total Jobs always
+                ].filter(node => statusCounts[node.id] > 0 || node.id === 'Total Jobs');
 
-                // Create edges conditionally based on statusCounts
                 const edges = [
                     { source: 'Total Jobs', target: 'Applied', value: statusCounts.Applied || 0 },
                     { source: 'Total Jobs', target: 'Interviewing', value: statusCounts.Interviewing || 0 },
                     { source: 'Total Jobs', target: 'Offered', value: statusCounts.Offered || 0 },
                     { source: 'Total Jobs', target: 'Rejected', value: statusCounts.Rejected || 0 },
                     { source: 'Total Jobs', target: 'Hired', value: statusCounts.Hired || 0 },
-                ].filter(edge => edge.value > 0); // Only keep edges with a non-zero value
+                ].filter(edge => edge.value > 0);
 
                 setData({ nodes, edges });
                 setLoading(false);

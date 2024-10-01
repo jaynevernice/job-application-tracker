@@ -93,7 +93,6 @@ router.get('/', async (request, response) => {
     }
 });
 
-// enum: ['Applied', 'Interviewing', 'Offered', 'Rejected', 'Hired'],
 // Get data from MongoDB
 // router.get('/analyze', async (request, response) => {
 //     try {
@@ -124,51 +123,6 @@ router.get('/', async (request, response) => {
 //     }
 // });
 
-// router.get('/analyze', async (request, response) => {
-//     try {
-//         const userId = request.user._id;
-
-//         console.log(userId);
-
-//         const jobs = await Job.find({ userId });
-
-//         console.log(jobs);
-
-//         // Count occurrences of each job status
-//         const jobStatusCounts = jobs.reduce((acc, job) => {
-//             acc[job.status] = (acc[job.status] || 0) + 1;
-//             return acc;
-//         }, {});
-
-//         console.log(jobStatusCounts);
-
-//         // Prepare data for the Sankey chart
-//         const nodes = [
-//             { id: 'Applied', title: 'Applied' },
-//             { id: 'Interviewing', title: 'Interviewing' },
-//             { id: 'Offered', title: 'Offered' },
-//             { id: 'Rejected', title: 'Rejected' },
-//             { id: 'Hired', title: 'Hired' }
-//         ];
-
-//         const edges = Object.entries(jobStatusCounts).map(([status, count]) => ({
-//             source: status,
-//             target: 'Job Statuses',
-//             value: count,
-//         }));
-
-//         return response.status(200).json({
-//             nodes,
-//             edges
-//         });
-
-//     } catch (error) {
-//         console.log(error.message);
-//         console.log('Request:', request.body);
-//         response.status(500).json({ message: error.message });
-//     }
-// });
-
 router.get('/analyze', async (request, response) => {
     try {
         const userId = request.user._id;
@@ -192,8 +146,6 @@ router.get('/analyze', async (request, response) => {
         response.status(500).json({ message: error.message });
     }
 });
-
-
 
 // Read one book
 router.get('/:id', async (request, response) => {
