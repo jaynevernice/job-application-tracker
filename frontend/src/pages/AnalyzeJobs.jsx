@@ -34,12 +34,20 @@ const AnalyzeJobs = () => {
                     { id: 'Total Jobs', title: 'Total Jobs' },
                 ].filter(node => statusCounts[node.id] > 0 || node.id === 'Total Jobs');
 
+                // const edges = [
+                //     { source: 'Total Jobs', target: 'Applied', value: statusCounts.Applied || 0 },
+                //     { source: 'Total Jobs', target: 'Interviewing', value: statusCounts.Interviewing || 0 },
+                //     { source: 'Total Jobs', target: 'Offered', value: statusCounts.Offered || 0 },
+                //     { source: 'Total Jobs', target: 'Rejected', value: statusCounts.Rejected || 0 },
+                //     { source: 'Total Jobs', target: 'Hired', value: statusCounts.Hired || 0 },
+                // ].filter(edge => edge.value > 0);
+
                 const edges = [
                     { source: 'Total Jobs', target: 'Applied', value: statusCounts.Applied || 0 },
-                    { source: 'Total Jobs', target: 'Interviewing', value: statusCounts.Interviewing || 0 },
-                    { source: 'Total Jobs', target: 'Offered', value: statusCounts.Offered || 0 },
-                    { source: 'Total Jobs', target: 'Rejected', value: statusCounts.Rejected || 0 },
-                    { source: 'Total Jobs', target: 'Hired', value: statusCounts.Hired || 0 },
+                    { source: 'Applied', target: 'Interviewing', value: statusCounts.Interviewing || 0 },
+                    { source: 'Interviewing', target: 'Offered', value: statusCounts.Offered || 0 },
+                    { source: 'Applied', target: 'Rejected', value: statusCounts.Rejected || 0 },
+                    { source: 'Offered', target: 'Hired', value: statusCounts.Hired || 0 },
                 ].filter(edge => edge.value > 0);
 
                 setData({ nodes, edges });
@@ -58,9 +66,9 @@ const AnalyzeJobs = () => {
     const graphOptions = {
         nodeWidth: 20,
         fontFamily: 'Quicksand, sans-serif',
-        fontWeight: 600,
-        height: 150,
-        width: 400,
+        // fontWeight: 600,
+        height: 300,
+        // width: 400,       
     };
 
     useEffect(() => {
