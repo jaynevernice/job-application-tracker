@@ -1,4 +1,4 @@
-![Screenshot_1-10-2024_185425_localhost](https://github.com/user-attachments/assets/fce00972-e328-41e8-9625-89a218bc36d3)# Job Application Tracker
+# Job Application Tracker
 
 ### Landing Page
 ![Landing Page](https://github.com/user-attachments/assets/74487a1f-c42a-4674-93c7-ef04c71c76ec)
